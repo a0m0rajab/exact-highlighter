@@ -1,6 +1,8 @@
-# Exact Contract for VS Code
+# Exact Contract (unofficial)
 
-Syntax highlighting for [Exact](https://github.com/expo/exact)'s Contract language.
+Syntax highlighting for Contract, the UI language of [Exact](https://github.com/expo/exact).
+A community extension, not made by Expo. Full guide:
+[github.com/a0m0rajab/exact-highlighter](https://github.com/a0m0rajab/exact-highlighter#readme).
 
 - `*.contract`: declarations (`use`, `shape`, `fn`, `component`, `routes`, `style`,
   `keyframes`…), component members (`state`, `derive`, `resource`, `mutation`,

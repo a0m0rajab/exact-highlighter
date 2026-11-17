@@ -1,13 +1,18 @@
 {
   "name": "exact-contract",
-  "displayName": "Exact Contract",
-  "description": "Syntax highlighting for Exact's Contract language (.contract and .test.contract files).",
+  "displayName": "Exact Contract (unofficial)",
+  "description": "Syntax highlighting for Contract, the UI language of Expo's Exact (.contract and .test.contract). A community extension, not made by Expo.",
   "version": "0.1.2",
   "publisher": "exact-community",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/expo/exact"
+    "url": "https://github.com/a0m0rajab/exact-highlighter",
+    "directory": "vscode-contract"
+  },
+  "homepage": "https://github.com/a0m0rajab/exact-highlighter#readme",
+  "bugs": {
+    "url": "https://github.com/a0m0rajab/exact-highlighter/issues"
   },
   "engines": {
     "vscode": "^1.80.0"
@@ -168,7 +173,9 @@
   },
   "scripts": {
     "test": "bun test/tokenize.test.mjs",
-    "package": "bunx @vscode/vsce package --no-dependencies"
+    "package": "bunx @vscode/vsce package --no-dependencies",
+    "publish:vsce": "bunx @vscode/vsce publish --no-dependencies",
+    "publish:ovsx": "bunx ovsx publish --no-dependencies"
   },
   "devDependencies": {
     "vscode-oniguruma": "^2.0.1",
