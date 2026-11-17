@@ -1,0 +1,81 @@
+{
+  "name": "exact-contract",
+  "displayName": "Exact Contract",
+  "description": "Syntax highlighting for Exact's Contract language (.contract and .test.contract files).",
+  "version": "0.1.0",
+  "publisher": "exact-community",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/expo/exact"
+  },
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "keywords": [
+    "exact",
+    "contract",
+    "expo",
+    "syntax"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "contract",
+        "aliases": [
+          "Contract",
+          "contract"
+        ],
+        "extensions": [
+          ".contract"
+        ],
+        "configuration": "./language-configuration.json"
+      },
+      {
+        "id": "contract-test",
+        "aliases": [
+          "Contract Test",
+          "contract-test"
+        ],
+        "filenamePatterns": [
+          "*.test.contract"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "contract",
+        "scopeName": "source.contract",
+        "path": "./syntaxes/contract.tmLanguage.json"
+      },
+      {
+        "language": "contract-test",
+        "scopeName": "source.contract-test",
+        "path": "./syntaxes/contract-test.tmLanguage.json"
+      },
+      {
+        "scopeName": "markdown.contract.codeblock",
+        "path": "./syntaxes/contract-markdown.tmLanguage.json",
+        "injectTo": [
+          "text.html.markdown"
+        ],
+        "embeddedLanguages": {
+          "meta.embedded.block.contract": "contract",
+          "meta.embedded.block.contract-test": "contract-test"
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "test": "bun test/tokenize.test.mjs",
+    "package": "bunx @vscode/vsce package --no-dependencies"
+  },
+  "devDependencies": {
+    "vscode-oniguruma": "^2.0.1",
+    "vscode-textmate": "^9.2.0"
+  }
+}

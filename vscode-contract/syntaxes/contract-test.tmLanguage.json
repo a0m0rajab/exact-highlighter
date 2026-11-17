@@ -1,0 +1,95 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Contract Test",
+  "scopeName": "source.contract-test",
+  "patterns": [
+    { "include": "source.contract#comment" },
+    { "include": "#test" },
+    { "include": "#launch" },
+    { "include": "#step" },
+    { "include": "source.contract" }
+  ],
+  "repository": {
+    "test": {
+      "begin": "^(test)\\s+",
+      "beginCaptures": { "1": { "name": "storage.type.test.contract" } },
+      "end": "$",
+      "patterns": [
+        {
+          "begin": "\"",
+          "end": "\"|$",
+          "name": "entity.name.function.test.contract string.quoted.double.contract",
+          "patterns": [{ "include": "source.contract#escape" }]
+        },
+        { "match": "\\b(on)\\b", "name": "keyword.other.contract" },
+        { "include": "#host" },
+        { "match": ",", "name": "punctuation.separator.comma.contract" }
+      ]
+    },
+
+    "host": {
+      "match": "\\b(web|macos|ios|tvos|linux|windows|android)\\b",
+      "name": "constant.language.host.contract"
+    },
+
+    "launch": {
+      "begin": "^\\s+(size|epoch|time-zone|at|locale|seed|fresh|before|fail|pass)\\b",
+      "beginCaptures": { "1": { "name": "keyword.control.launch.contract" } },
+      "end": "$",
+      "patterns": [
+        { "include": "#size" },
+        { "include": "#modifier" },
+        { "include": "#value" }
+      ]
+    },
+
+    "step": {
+      "begin": "^\\s+(tap|type|pick|authorize|clock|resize|prefer|reload|request|close|back|screenshot|perf|expect)\\b(?!-)",
+      "beginCaptures": { "1": { "name": "keyword.control.step.contract" } },
+      "end": "$",
+      "patterns": [
+        { "include": "#size" },
+        { "include": "#state-path" },
+        { "include": "#modifier" },
+        { "include": "#value" }
+      ]
+    },
+
+    "size": {
+      "match": "\\b(\\d+)(x)(\\d+)\\b",
+      "captures": {
+        "1": { "name": "constant.numeric.contract" },
+        "2": { "name": "keyword.operator.contract" },
+        "3": { "name": "constant.numeric.contract" }
+      }
+    },
+
+    "state-path": {
+      "comment": "`state groceries.0 .done` and `until state x.y`",
+      "match": "\\b(state)\\s+([A-Za-z_][A-Za-z0-9_]*)((?:\\s?\\.(?:[A-Za-z_][A-Za-z0-9_]*|\\d+))*)",
+      "captures": {
+        "1": { "name": "keyword.other.step.contract" },
+        "2": { "name": "variable.other.readwrite.contract" },
+        "3": { "patterns": [{ "include": "source.contract#member-access" }] }
+      }
+    },
+
+    "modifier": {
+      "match": "\\b(text|tree|has|missing|no|failures|disabled|enabled|focused|layout|width|height|refusal|sound|wakelock|held|released|midi|sent|mediasession|settle|data|real|until|within|key|down|up|for|append|copy|cut|paste|cancel|hover|dblclick|contextmenu|pinch|wheel|history|into|modifiers|drag|to|press|over|hold|from|mouse|keyboard|during|fetch|times|as|in|query|built|evaluated|gain|ends|playbackRate|pan|by|now|GET|POST|PUT|PATCH|DELETE|s|ms)\\b(?!-)",
+      "name": "keyword.other.step.contract"
+    },
+
+    "value": {
+      "patterns": [
+        { "include": "source.contract#comment" },
+        { "include": "source.contract#string" },
+        { "include": "source.contract#template" },
+        { "include": "source.contract#constant" },
+        { "include": "source.contract#number" },
+        { "match": "null", "name": "constant.language.null.contract" },
+        { "include": "source.contract#operator" },
+        { "include": "source.contract#identifier" }
+      ]
+    }
+  }
+}

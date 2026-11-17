@@ -1,0 +1,601 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Contract",
+  "scopeName": "source.contract",
+  "fileTypes": [
+    "contract"
+  ],
+  "patterns": [
+    {
+      "include": "#comment"
+    },
+    {
+      "include": "#declaration"
+    },
+    {
+      "include": "#member"
+    },
+    {
+      "include": "#statement"
+    },
+    {
+      "include": "#state-part"
+    },
+    {
+      "include": "#field"
+    },
+    {
+      "include": "#node"
+    },
+    {
+      "include": "#expression"
+    }
+  ],
+  "repository": {
+    "comment": {
+      "match": "//.*$",
+      "name": "comment.line.double-slash.contract"
+    },
+    "declaration": {
+      "patterns": [
+        {
+          "comment": "use A, B as C from \"exact:content\"",
+          "begin": "^(use)\\b",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.control.import.contract"
+            }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "match": "\\b(from|as)\\b",
+              "name": "keyword.control.import.contract"
+            },
+            {
+              "include": "#string"
+            },
+            {
+              "match": "\\b[A-Za-z_][A-Za-z0-9_]*\\b",
+              "name": "variable.other.readwrite.alias.contract"
+            },
+            {
+              "match": ",",
+              "name": "punctuation.separator.comma.contract"
+            }
+          ]
+        },
+        {
+          "match": "^(shape|component|members|routes)\\s+([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": {
+              "name": "storage.type.$1.contract"
+            },
+            "2": {
+              "name": "entity.name.type.contract"
+            }
+          }
+        },
+        {
+          "match": "^(style|decoration|atom|keyframes|timeline)\\s+([A-Za-z_][A-Za-z0-9_]*(?:-[A-Za-z][A-Za-z0-9_]*)*)",
+          "captures": {
+            "1": {
+              "name": "storage.type.style.contract"
+            },
+            "2": {
+              "name": "entity.name.type.style.contract"
+            }
+          }
+        },
+        {
+          "match": "^(fn|source)\\s+([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": {
+              "name": "storage.type.function.contract"
+            },
+            "2": {
+              "name": "entity.name.function.contract"
+            }
+          }
+        },
+        {
+          "match": "^(color-profile)\\s+(--[A-Za-z][A-Za-z0-9_-]*)",
+          "captures": {
+            "1": {
+              "name": "storage.type.style.contract"
+            },
+            "2": {
+              "name": "variable.other.constant.contract"
+            }
+          }
+        },
+        {
+          "match": "^(font|sound|theme)\\b",
+          "name": "storage.type.asset.contract"
+        },
+        {
+          "comment": "source lines: url, method, header, body json, graphql, pointer",
+          "match": "^\\s+(url|method|header|body|graphql|pointer)\\b(?=\\s+[\"j])",
+          "name": "keyword.other.source.contract"
+        }
+      ]
+    },
+    "member": {
+      "patterns": [
+        {
+          "match": "^\\s+(view|props|inject|provide|slot)\\s*$",
+          "captures": {
+            "1": {
+              "name": "storage.type.section.contract"
+            }
+          }
+        },
+        {
+          "match": "^\\s+(state|derive)\\s+([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": {
+              "name": "storage.type.$1.contract"
+            },
+            "2": {
+              "name": "variable.other.definition.contract"
+            }
+          }
+        },
+        {
+          "match": "^\\s+(resource|mutation)\\s+([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": {
+              "name": "storage.type.$1.contract"
+            },
+            "2": {
+              "name": "variable.other.definition.contract"
+            }
+          }
+        },
+        {
+          "match": "^\\s+(action|task|sequence)\\s+([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": {
+              "name": "storage.type.function.contract"
+            },
+            "2": {
+              "name": "entity.name.function.contract"
+            }
+          }
+        },
+        {
+          "match": "^\\s+(members)\\b",
+          "name": "storage.type.section.contract"
+        },
+        {
+          "comment": "timer schedule lines inside a task",
+          "match": "^\\s+(every|after|change|play)(?=\\()",
+          "captures": {
+            "1": {
+              "name": "keyword.control.schedule.contract"
+            }
+          }
+        }
+      ]
+    },
+    "statement": {
+      "patterns": [
+        {
+          "match": "^\\s+(let|send)\\s+([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": {
+              "name": "keyword.other.$1.contract"
+            },
+            "2": {
+              "name": "variable.other.definition.contract"
+            }
+          }
+        },
+        {
+          "match": "^\\s+(refresh)\\s+([A-Za-z_][A-Za-z0-9_]*)\\s*$",
+          "captures": {
+            "1": {
+              "name": "keyword.other.refresh.contract"
+            },
+            "2": {
+              "name": "variable.other.readwrite.contract"
+            }
+          }
+        },
+        {
+          "comment": "an assignment in an action: `draft = v`",
+          "match": "^\\s+([A-Za-z_][A-Za-z0-9_]*)\\s+(=)(?!=)",
+          "captures": {
+            "1": {
+              "name": "variable.other.readwrite.contract"
+            },
+            "2": {
+              "name": "keyword.operator.assignment.contract"
+            }
+          }
+        }
+      ]
+    },
+    "state-part": {
+      "comment": ":active, :hover, ::placeholder, ::backdrop alone on a line",
+      "match": "^\\s*(::?)([A-Za-z][A-Za-z0-9-]*)\\s*$",
+      "captures": {
+        "1": {
+          "name": "punctuation.definition.entity.contract"
+        },
+        "2": {
+          "name": "entity.other.attribute-name.pseudo-class.contract"
+        }
+      }
+    },
+    "field": {
+      "comment": "a shape, props or inject field: `title: string`",
+      "match": "^\\s+([A-Za-z_][A-Za-z0-9_]*)\\s*(:)\\s*(.*?)(?=\\s*(?://|$))",
+      "captures": {
+        "1": {
+          "name": "variable.other.property.contract"
+        },
+        "2": {
+          "name": "punctuation.separator.key-value.contract"
+        },
+        "3": {
+          "patterns": [
+            {
+              "include": "#type"
+            }
+          ]
+        }
+      }
+    },
+    "node": {
+      "comment": "a view node: an element (lowercase) or a component (capitalised) at the start of a line",
+      "patterns": [
+        {
+          "match": "^\\s+(?!(?:if|else|for|match|case|let|send|refresh|when|and|or|not|in|as|true|false|none|some)\\b)([a-z][A-Za-z0-9_]*(?:-[A-Za-z][A-Za-z0-9_]*)*)(?![A-Za-z0-9_-])(?![(.\\[])(?!\\s*[=:])",
+          "captures": {
+            "1": {
+              "name": "entity.name.tag.contract"
+            }
+          }
+        },
+        {
+          "match": "^\\s+([A-Z][A-Za-z0-9_]*)(?![A-Za-z0-9_])(?![(.])(?!\\s*[=:])",
+          "captures": {
+            "1": {
+              "name": "entity.name.type.component.contract"
+            }
+          }
+        }
+      ]
+    },
+    "type": {
+      "patterns": [
+        {
+          "match": "\\b(string|number|bool|any|void)\\b",
+          "name": "support.type.primitive.contract"
+        },
+        {
+          "match": "\\b(option|list|map|Result)\\b(?=\\s*[<(])",
+          "name": "support.type.contract"
+        },
+        {
+          "match": "\\b[A-Z][A-Za-z0-9_]*\\b",
+          "name": "entity.name.type.contract"
+        },
+        {
+          "match": "\\[\\]",
+          "name": "punctuation.definition.list.contract"
+        },
+        {
+          "include": "#expression"
+        }
+      ]
+    },
+    "expression": {
+      "patterns": [
+        {
+          "include": "#comment"
+        },
+        {
+          "include": "#string"
+        },
+        {
+          "include": "#template"
+        },
+        {
+          "include": "#color"
+        },
+        {
+          "include": "#number"
+        },
+        {
+          "include": "#shape-ref"
+        },
+        {
+          "include": "#type-annotation"
+        },
+        {
+          "include": "#attribute"
+        },
+        {
+          "include": "#keyword"
+        },
+        {
+          "include": "#constant"
+        },
+        {
+          "include": "#call"
+        },
+        {
+          "include": "#member-access"
+        },
+        {
+          "include": "#operator"
+        },
+        {
+          "include": "#identifier"
+        }
+      ]
+    },
+    "shape-ref": {
+      "comment": "`as shape Item[]`",
+      "match": "\\b(as)\\s+(shape)\\s+([A-Z][A-Za-z0-9_]*)(\\[\\])?",
+      "captures": {
+        "1": {
+          "name": "keyword.control.as.contract"
+        },
+        "2": {
+          "name": "storage.type.shape.contract"
+        },
+        "3": {
+          "name": "entity.name.type.contract"
+        },
+        "4": {
+          "name": "punctuation.definition.list.contract"
+        }
+      }
+    },
+    "attribute": {
+      "comment": "`gap=8`, `aria-label=\u2026`, a named argument; never `==`",
+      "match": "(?<![A-Za-z0-9_.-])([A-Za-z_][A-Za-z0-9_]*(?:-[A-Za-z][A-Za-z0-9_]*)*)(=)(?![=>])",
+      "captures": {
+        "1": {
+          "name": "entity.other.attribute-name.contract"
+        },
+        "2": {
+          "name": "punctuation.separator.key-value.contract"
+        }
+      }
+    },
+    "keyword": {
+      "patterns": [
+        {
+          "match": "\\b(if|else|for|in|match|case|when|then|with|key)\\b(?!-)",
+          "name": "keyword.control.contract"
+        },
+        {
+          "match": "\\b(as|from|refreshes|queue|parallel|persist|transient|keep|mount|frame|wait)\\b(?!-)",
+          "name": "keyword.other.contract"
+        },
+        {
+          "match": "\\b(and|or|not)\\b(?!-)",
+          "name": "keyword.operator.logical.contract"
+        },
+        {
+          "match": "\\b(shape)\\b(?!-)",
+          "name": "storage.type.shape.contract"
+        }
+      ]
+    },
+    "constant": {
+      "patterns": [
+        {
+          "match": "\\b(true|false)\\b(?!-)",
+          "name": "constant.language.boolean.contract"
+        },
+        {
+          "match": "\\b(none)\\b(?![-(])",
+          "name": "constant.language.none.contract"
+        },
+        {
+          "match": "\\b(some)\\b(?=\\()",
+          "name": "support.function.option.contract"
+        }
+      ]
+    },
+    "call": {
+      "patterns": [
+        {
+          "comment": "Contract's standard functions and intrinsics",
+          "match": "\\b(pending|failed|failure|current|empty|first|last|round|floor|ceil|abs|min|max|clamp|sortBy|path|push|pop|go|top|stack|haptic|encodeURIComponent|decodeURIComponent|len|sum|range|now|today|format|formatNumber|formatDate|focus|scrollTo|dismiss|present|open|share|copy|exactViewport|refused)(?=\\()",
+          "name": "support.function.contract"
+        },
+        {
+          "match": "\\b([A-Z][A-Za-z0-9_]*)(?=\\()",
+          "name": "entity.name.type.constructor.contract"
+        },
+        {
+          "match": "\\b([a-z_][A-Za-z0-9_]*)(?=\\()",
+          "name": "entity.name.function.contract"
+        }
+      ]
+    },
+    "member-access": {
+      "patterns": [
+        {
+          "match": "(\\.)([A-Za-z_][A-Za-z0-9_]*)(?=\\()",
+          "captures": {
+            "1": {
+              "name": "punctuation.accessor.contract"
+            },
+            "2": {
+              "name": "entity.name.function.member.contract"
+            }
+          }
+        },
+        {
+          "match": "(\\.)([A-Za-z_][A-Za-z0-9_]*|\\d+)",
+          "captures": {
+            "1": {
+              "name": "punctuation.accessor.contract"
+            },
+            "2": {
+              "name": "variable.other.property.contract"
+            }
+          }
+        }
+      ]
+    },
+    "operator": {
+      "patterns": [
+        {
+          "match": "=>",
+          "name": "storage.type.function.arrow.contract"
+        },
+        {
+          "match": "==|!=|<=|>=|<|>",
+          "name": "keyword.operator.comparison.contract"
+        },
+        {
+          "match": "&&|\\|\\||!",
+          "name": "keyword.operator.logical.contract"
+        },
+        {
+          "match": "\\?|:",
+          "name": "keyword.operator.ternary.contract"
+        },
+        {
+          "match": "=",
+          "name": "keyword.operator.assignment.contract"
+        },
+        {
+          "match": "\\+|-|\\*|/|%",
+          "name": "keyword.operator.arithmetic.contract"
+        },
+        {
+          "match": ",",
+          "name": "punctuation.separator.comma.contract"
+        },
+        {
+          "match": "[()\\[\\]{}]",
+          "name": "meta.brace.contract"
+        }
+      ]
+    },
+    "identifier": {
+      "match": "\\b[A-Za-z_][A-Za-z0-9_]*(?:-[A-Za-z][A-Za-z0-9_]*)*\\b",
+      "name": "variable.other.readwrite.contract"
+    },
+    "number": {
+      "match": "(?<![A-Za-z0-9_.])\\d+(?:\\.\\d+)?(?:[eE][+-]?\\d+)?",
+      "name": "constant.numeric.contract"
+    },
+    "color": {
+      "match": "#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3,4})\\b",
+      "name": "constant.other.color.rgb-value.hex.contract"
+    },
+    "escape": {
+      "match": "\\\\(?:u\\{[0-9a-fA-F]{1,6}\\}|u[0-9a-fA-F]{4}|[nt\"\\\\`$])",
+      "name": "constant.character.escape.contract"
+    },
+    "string": {
+      "begin": "\"",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.string.begin.contract"
+        }
+      },
+      "end": "\"|$",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.string.end.contract"
+        }
+      },
+      "name": "string.quoted.double.contract",
+      "patterns": [
+        {
+          "include": "#escape"
+        },
+        {
+          "match": "\\\\.",
+          "name": "invalid.illegal.escape.contract"
+        }
+      ]
+    },
+    "template": {
+      "begin": "`",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.string.template.begin.contract"
+        }
+      },
+      "end": "`|$",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.string.template.end.contract"
+        }
+      },
+      "name": "string.template.contract",
+      "patterns": [
+        {
+          "include": "#escape"
+        },
+        {
+          "begin": "\\$\\{",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.template-expression.begin.contract"
+            }
+          },
+          "end": "\\}",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.template-expression.end.contract"
+            }
+          },
+          "name": "meta.template.expression.contract",
+          "contentName": "meta.embedded.line.contract",
+          "patterns": [
+            {
+              "include": "#template-expression"
+            }
+          ]
+        }
+      ]
+    },
+    "template-expression": {
+      "patterns": [
+        {
+          "begin": "\\{",
+          "end": "\\}",
+          "patterns": [
+            {
+              "include": "#template-expression"
+            }
+          ]
+        },
+        {
+          "include": "#expression"
+        }
+      ]
+    },
+    "type-annotation": {
+      "comment": "a parameter's or fn's type: `v: string`, `): Todo[] =`",
+      "match": "(:)\\s*(?:(string|number|bool)\\b|([A-Z][A-Za-z0-9_]*)(?=(?:\\[\\])?\\s*(?:[,)=]|$)))(\\[\\])?",
+      "captures": {
+        "1": {
+          "name": "punctuation.separator.type-annotation.contract"
+        },
+        "2": {
+          "name": "support.type.primitive.contract"
+        },
+        "3": {
+          "name": "entity.name.type.contract"
+        },
+        "4": {
+          "name": "punctuation.definition.list.contract"
+        }
+      }
+    }
+  }
+}

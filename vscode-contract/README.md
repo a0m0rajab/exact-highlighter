@@ -1,0 +1,35 @@
+# Exact Contract for VS Code
+
+Syntax highlighting for [Exact](https://github.com/expo/exact)'s Contract language.
+
+- `*.contract`: declarations (`use`, `shape`, `fn`, `component`, `routes`, `style`,
+  `keyframes`…), component members (`state`, `derive`, `resource`, `mutation`,
+  `action`, `view`), view elements and components, attributes (`gap=8`, `aria-label=…`),
+  state parts (`:active`, `::placeholder`), types, strings, templates with `${…}`,
+  hex colours, numbers, comments and expressions.
+- `*.test.contract`: tests, launch lines (`size 390x844`, `epoch`, `locale`…), steps
+  (`tap`, `type`, `clock`, `expect`…) and their modifiers, state paths and hosts.
+- Markdown: ```` ```contract ```` and ```` ```contract-test ```` code fences.
+
+It also comments with `//`, closes brackets and quotes, and folds by indentation.
+
+## Install
+
+```sh
+bun install
+bun run package          # writes exact-contract-0.1.0.vsix
+code --install-extension exact-contract-0.1.0.vsix
+```
+
+Or open this folder in VS Code and press F5 to try it in an Extension Development Host.
+
+## Test
+
+`bun run test` tokenizes sample Contract with VS Code's TextMate engine and checks the
+scopes. `bun test/tokenize.test.mjs --dump path/to/app.contract` prints every token's scopes.
+
+## Limits
+
+TextMate grammars match line by line, so a few things are approximations: a view element is
+any lowercase name that begins a line and is not a keyword or an assignment, and a type after
+`:` is recognised only for `string`, `number`, `bool` and capitalised names.
