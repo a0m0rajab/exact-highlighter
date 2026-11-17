@@ -2,7 +2,7 @@
   "name": "exact-contract",
   "displayName": "Exact Contract",
   "description": "Syntax highlighting for Exact's Contract language (.contract and .test.contract files).",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "exact-community",
   "license": "MIT",
   "repository": {
@@ -68,7 +68,87 @@
           "meta.embedded.block.contract-test": "contract-test"
         }
       }
-    ]
+    ],
+    "configurationDefaults": {
+      "editor.tokenColorCustomizations": {
+        "[Visual Studio Dark]": {
+          "textMateRules": [
+            {
+              "scope": [
+                "entity.name.type.contract",
+                "entity.name.type.component.contract",
+                "entity.name.type.style.contract",
+                "entity.name.type.constructor.contract",
+                "support.type.primitive.contract",
+                "support.type.contract"
+              ],
+              "settings": {
+                "foreground": "#4EC9B0"
+              }
+            },
+            {
+              "scope": [
+                "entity.name.function.contract",
+                "entity.name.function.member.contract",
+                "support.function.contract",
+                "support.function.option.contract"
+              ],
+              "settings": {
+                "foreground": "#DCDCAA"
+              }
+            },
+            {
+              "scope": [
+                "variable.other.property.contract",
+                "variable.other.definition.contract",
+                "variable.other.readwrite.contract"
+              ],
+              "settings": {
+                "foreground": "#9CDCFE"
+              }
+            }
+          ]
+        },
+        "[Visual Studio Light]": {
+          "textMateRules": [
+            {
+              "scope": [
+                "entity.name.type.contract",
+                "entity.name.type.component.contract",
+                "entity.name.type.style.contract",
+                "entity.name.type.constructor.contract",
+                "support.type.primitive.contract",
+                "support.type.contract"
+              ],
+              "settings": {
+                "foreground": "#267F99"
+              }
+            },
+            {
+              "scope": [
+                "entity.name.function.contract",
+                "entity.name.function.member.contract",
+                "support.function.contract",
+                "support.function.option.contract"
+              ],
+              "settings": {
+                "foreground": "#795E26"
+              }
+            },
+            {
+              "scope": [
+                "variable.other.property.contract",
+                "variable.other.definition.contract",
+                "variable.other.readwrite.contract"
+              ],
+              "settings": {
+                "foreground": "#001080"
+              }
+            }
+          ]
+        }
+      }
+    }
   },
   "scripts": {
     "test": "bun test/tokenize.test.mjs",

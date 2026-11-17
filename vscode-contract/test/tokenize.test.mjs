@@ -159,3 +159,15 @@ for (const [scope, text, checks] of expectations) {
 }
 if (failed) process.exit(1);
 console.log('all scopes as expected');
+
+// Every scope the extension colours for the Visual Studio themes must be one a grammar emits.
+const pkg = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
+const grammarText = Object.values(grammarFiles).map((f) => readFileSync(join(root, f), 'utf8')).join('\n');
+const themed = Object.values(pkg.contributes.configurationDefaults['editor.tokenColorCustomizations'])
+  .flatMap((t) => t.textMateRules.flatMap((r) => r.scope));
+const unknown = themed.filter((s) => !grammarText.includes(`"${s}"`) && !grammarText.includes(`"${s} `));
+if (unknown.length) {
+  console.log(`FAIL theme colours name scopes no grammar emits: ${unknown.join(', ')}`);
+  process.exit(1);
+}
+console.log(`theme colours: ${new Set(themed).size} scopes, all emitted`);
