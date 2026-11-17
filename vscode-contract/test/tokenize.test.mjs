@@ -84,6 +84,7 @@ const expectations = [
     ['shape', 'storage.type.shape'],
     ['Todo', 'entity.name.type'],
     ['id', 'variable.other.property'],
+    [':', 'punctuation.separator.type-annotation'],
     ['string', 'support.type.primitive'],
     ['fn', 'storage.type.function'],
     ['leftText', 'entity.name.function'],

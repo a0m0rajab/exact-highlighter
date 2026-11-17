@@ -236,7 +236,7 @@
           "name": "variable.other.property.contract"
         },
         "2": {
-          "name": "punctuation.separator.key-value.contract"
+          "name": "punctuation.separator.type-annotation.contract"
         },
         "3": {
           "patterns": [

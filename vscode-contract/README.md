@@ -15,7 +15,7 @@ It also comments with `//`, closes brackets and quotes, and folds by indentation
 
 The Visual Studio Dark and Light themes leave type, function and variable names
 uncoloured in every language. For those two themes the extension colours Contract's
-shape and component names, field and state names, types and functions as Dark+ and
+shape and component names, field and state names, types, the `:` before a type and functions as Dark+ and
 Light+ do. Other themes colour them already. A `editor.tokenColorCustomizations` of
 your own replaces these defaults.
 
@@ -23,8 +23,8 @@ your own replaces these defaults.
 
 ```sh
 bun install
-bun run package          # writes exact-contract-0.1.1.vsix
-code --install-extension exact-contract-0.1.1.vsix
+bun run package          # writes exact-contract-0.1.2.vsix
+code --install-extension exact-contract-0.1.2.vsix
 ```
 
 Or open this folder in VS Code and press F5 to try it in an Extension Development Host.

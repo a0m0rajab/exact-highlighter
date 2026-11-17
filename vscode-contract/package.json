@@ -2,7 +2,7 @@
   "name": "exact-contract",
   "displayName": "Exact Contract",
   "description": "Syntax highlighting for Exact's Contract language (.contract and .test.contract files).",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "exact-community",
   "license": "MIT",
   "repository": {
@@ -106,6 +106,14 @@
               "settings": {
                 "foreground": "#9CDCFE"
               }
+            },
+            {
+              "scope": [
+                "punctuation.separator.type-annotation.contract"
+              ],
+              "settings": {
+                "foreground": "#569CD6"
+              }
             }
           ]
         },
@@ -143,6 +151,14 @@
               ],
               "settings": {
                 "foreground": "#001080"
+              }
+            },
+            {
+              "scope": [
+                "punctuation.separator.type-annotation.contract"
+              ],
+              "settings": {
+                "foreground": "#0000FF"
               }
             }
           ]
