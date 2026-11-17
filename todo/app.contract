@@ -1,0 +1,64 @@
+// Todo: the view. app.ts owns the list and keeps it in app:/data/todos.json.
+// Colours, fonts and sizes are left unsaid, so each platform supplies its own.
+shape Todo
+  id: string
+  title: string
+  done: bool
+
+shape Reply
+  ok: bool
+  error: string
+
+routes nav
+  home "/"
+
+fn leftText(n: number): string = `${n} ${n == 1 ? "item" : "items"} left`
+
+component App
+  state draft = ""
+  resource todos = loadTodos() as shape Todo[] else empty()
+  mutation added as shape Reply refreshes todos then afterAdd
+  mutation changed as shape Reply queue refreshes todos
+  derive left = todos.filter(t => not t.done).length
+  derive addError = match added { case some(r) => r.error, case none => "" }
+
+  action edit(v: string)
+    draft = v
+  action add
+    if draft.trim() != ""
+      send added = addTodo(draft.trim())
+  action afterAdd
+    if addError == ""
+      draft = ""
+  action toggle(id: string, done: bool)
+    send changed = setDone(id, done)
+  action remove(id: string)
+    send changed = removeTodo(id)
+
+  view
+    main testId="root" navigationKey=`${top(nav).id}` width="100%" height="100%"
+      for e in stack(nav) key=e.id
+        column navigationKey=`${e.id}` navigationScroll="content" position="absolute" inset=0
+          header display="flex" align-items="center" padding="8px 16px"
+            text "Todo" role="heading" aria-level=1 flex=1
+          list id="content" appearance="auto" listStyle="inset-grouped" flex=1 min-height=0
+            section
+              row gap=8 align-items="center"
+                column flex=1 min-width=0 gap=4
+                  input value=draft input=edit submit=add placeholder="Add a todo"
+                    aria-label="New todo" testId="draft"
+                  if addError != "" and not pending(added)
+                    text addError font="-exact-footnote" color="-exact-system-red" testId="add-error"
+                button press=add disabled=(draft.trim() == "") buttonStyle="filled" testId="add"
+                  text "Add"
+            section
+              for t in todos key=t.id
+                row gap=8 align-items="center" delete=remove(t.id) testId=`todo-${t.id}`
+                  input type="checkbox" checked=t.done change=toggle(t.id) aria-label=t.title
+                    testId=`done-${t.id}`
+                  text t.title flex=1 min-width=0 testId=`title-${t.id}`
+                    color=(t.done ? "-exact-secondary-label" : "-exact-label")
+                  button press=remove(t.id) aria-label=`Delete ${t.title}` testId=`remove-${t.id}`
+                    image "symbol:delete"
+              footer
+                text (todos.length == 0 ? "Nothing to do. Add a todo above." : leftText(left)) testId="left"

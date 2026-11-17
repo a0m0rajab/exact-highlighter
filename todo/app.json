@@ -1,0 +1,20 @@
+{
+  "$schema": "../exact/scripts/app.schema.json",
+  "name": "Todo",
+  "short_name": "Todo",
+  "id": "com.example.todo-c8aeae",
+  "start_url": "/",
+  "display": "standalone",
+  "app": {
+    "id": "com.example.todo-c8aeae",
+    "name": "Todo"
+  },
+  "host": {
+    "web": {}
+  },
+  "deploy": {
+    "store": {
+      "web": "0"
+    }
+  }
+}

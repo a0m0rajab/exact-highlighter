@@ -1,0 +1,63 @@
+test "an empty list says what to do"
+  expect tree has "root"
+  expect text "left" == "Nothing to do. Add a todo above."
+
+test "todos are added, a repeat refused, and the count follows"
+  type "draft" "Milk"
+  tap "add"
+  clock data
+  expect text "title-1" == "Milk"
+  expect text "draft" == ""
+  expect text "left" == "1 item left"
+  type "draft" "Bread"
+  tap "add"
+  clock data
+  expect text "left" == "2 items left"
+  type "draft" "milk"
+  tap "add"
+  clock data
+  expect text "add-error" == "Milk is already on the list."
+  expect text "draft" == "milk"
+  expect text "left" == "2 items left"
+
+test "a todo is checked off, unchecked, and kept across a reload"
+  type "draft" "Milk"
+  tap "add"
+  clock data
+  type "draft" "Bread"
+  tap "add"
+  clock data
+  tap "done-1"
+  clock data
+  expect state todos.0 .done == true
+  expect text "left" == "1 item left"
+  reload
+  expect state todos.0 .done == true
+  expect text "left" == "1 item left"
+  tap "done-1"
+  clock data
+  expect state todos.0 .done == false
+  expect text "left" == "2 items left"
+
+test "a todo is deleted by its button and by a swipe"
+  type "draft" "Milk"
+  tap "add"
+  clock data
+  type "draft" "Bread"
+  tap "add"
+  clock data
+  type "draft" "Eggs"
+  tap "add"
+  clock data
+  tap "remove-1"
+  clock data
+  expect tree missing "todo-1"
+  expect text "left" == "2 items left"
+  tap "todo-2-delete"
+  clock data
+  expect tree missing "todo-2"
+  expect tree has "todo-3"
+  expect text "left" == "1 item left"
+  tap "remove-3"
+  clock data
+  expect text "left" == "Nothing to do. Add a todo above."
